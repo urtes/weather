@@ -3,6 +3,7 @@ package com.task.weather
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
@@ -15,5 +16,16 @@ class MainActivity : AppCompatActivity() {
     fun toastMe(view: View) {
         val myToast = Toast.makeText(this, "Hello Toast!", Toast.LENGTH_SHORT)
         myToast.show()
+    }
+
+    fun countMe(view: View) {
+        val showCountTextView = findViewById<TextView>(R.id.textView)
+
+        val countString = showCountTextView.text.toString()
+
+        var count: Int = Integer.parseInt(countString)
+        count++
+
+        showCountTextView.text = count.toString()
     }
 }
