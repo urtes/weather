@@ -17,13 +17,16 @@ import org.json.JSONObject
 class MainActivity : AppCompatActivity() {
 
     private var textViewJson: TextView? = null
+    private var currentWeather: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         textViewJson = findViewById<TextView>(R.id.tv_users)
+        currentWeather = findViewById<TextView>(R.id.weather)
 
         getUsers()
+        getWeather()
     }
 
     fun toastMe(view: View) {
@@ -65,6 +68,22 @@ class MainActivity : AppCompatActivity() {
                     textViewJson!!.text = "response : $str_user "
                 },
                 Response.ErrorListener { textViewJson!!.text = "That didn't work!" })
+        queue.add(stringReq)
+    }
+
+    fun getWeather() {
+        val queue = Volley.newRequestQueue(this)
+        var url: String = "https://api.openweathermap.org/data/2.5/weather?q=vilnius&appid=dd1cbb470e98079b87159f9a28b09359"
+
+        var stringReq = StringRequest(Request.Method.GET, url,
+                Response.Listener<String> { response ->
+
+                    var strResp = response.toString()
+                    val jsonObj: JSONObject = JSONObject(strResp)
+                    var str_weather: String = jsonObj.get("name").toString()
+                    currentWeather!!.text = "City: $str_weather"
+                },
+                Response.ErrorListener { currentWeather!!.text = "That didn't work!" })
         queue.add(stringReq)
     }
 }
