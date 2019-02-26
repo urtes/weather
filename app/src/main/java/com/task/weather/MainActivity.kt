@@ -18,7 +18,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
 import org.json.JSONObject
 import android.content.Context.SEARCH_SERVICE
+import android.support.constraint.ConstraintLayout
+import android.widget.ImageView
 import android.widget.SearchView
+import com.bumptech.glide.Glide
 
 
 class MainActivity : AppCompatActivity() {
@@ -45,8 +48,6 @@ class MainActivity : AppCompatActivity() {
                 doMySearch(query)
             }
         }
-
-
     }
 
     fun doMySearch(query: String) {
@@ -63,9 +64,16 @@ class MainActivity : AppCompatActivity() {
                     var strResp = response.toString()
                     val jsonObj: JSONObject = JSONObject(strResp)
                     val jsonObjInner: JSONObject = jsonObj.getJSONObject("main")
+                    val jsonObjectWeather: JSONObject = jsonObj.getJSONArray("weather").getJSONObject(0)
                     var str_weather: String = jsonObj.get("name").toString()
                     var str_temp: String = jsonObjInner.get("temp").toString()
+                    var str_icon: String = jsonObjectWeather.get("icon").toString()
                     showSearchResult!!.text = "City: $str_weather\nTemperature: $str_temp"
+
+                    val constraintLayout = findViewById<ConstraintLayout>(R.id.constraintLayout)
+                    val imageView = ImageView(this)
+                    Glide.with(this).load("http://openweathermap.org/img/w/$str_icon.png").into(imageView)
+                    constraintLayout.addView(imageView)
                 },
                 Response.ErrorListener { showSearchResult!!.text = "That didn't work!" })
         queue.add(stringReq)
