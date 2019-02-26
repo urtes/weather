@@ -1,6 +1,5 @@
 package com.task.weather
 
-import android.app.DownloadManager
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
@@ -8,20 +7,21 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
-import android.widget.TextView
-import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_main.*
-import org.json.JSONArray
 import org.json.JSONObject
-import android.content.Context.SEARCH_SERVICE
 import android.support.constraint.ConstraintLayout
-import android.widget.ImageView
-import android.widget.SearchView
 import com.bumptech.glide.Glide
+import android.support.v7.widget.Toolbar
+import android.support.v7.widget.SearchView
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,9 +33,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val searchView = findViewById(R.id.searchView) as SearchView
+        var mToolbar = findViewById(R.id.my_toolbar) as Toolbar
+        setSupportActionBar(mToolbar)
+
+//        val searchView = findViewById(R.id.searchView) as SearchView
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
 
 //        textViewJson = findViewById<TextView>(R.id.tv_users)
 //        currentWeather = findViewById<TextView>(R.id.weather)
@@ -50,8 +53,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun doMySearch(query: String) {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.options_menu, menu)
 
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        (menu.findItem(R.id.action_search).actionView as SearchView).apply {
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        }
+
+        return true
+    }
+
+
+
+    fun doMySearch(query: String) {
         val showSearchResult = findViewById<TextView>(R.id.search_result)
 
         val queue = Volley.newRequestQueue(this)
@@ -68,7 +83,7 @@ class MainActivity : AppCompatActivity() {
                     var str_weather: String = jsonObj.get("name").toString()
                     var str_temp: String = jsonObjInner.get("temp").toString()
                     var str_icon: String = jsonObjectWeather.get("icon").toString()
-                    showSearchResult!!.text = "City: $str_weather\nTemperature: $str_temp"
+                    showSearchResult!!.text = "City: $str_weather\nTemperature: $str_temp °C"
 
                     val constraintLayout = findViewById<ConstraintLayout>(R.id.constraintLayout)
                     val imageView = ImageView(this)
