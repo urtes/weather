@@ -20,14 +20,10 @@ import android.support.v7.widget.SearchView
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-
-
+import com.task.weather.fragments.FirstFragment
 
 
 class MainActivity : AppCompatActivity() {
-
-    private var textViewJson: TextView? = null
-    private var currentWeather: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,21 +32,17 @@ class MainActivity : AppCompatActivity() {
         var mToolbar = findViewById(R.id.my_toolbar) as Toolbar
         setSupportActionBar(mToolbar)
 
-//        val searchView = findViewById(R.id.searchView) as SearchView
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-//        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-
-//        textViewJson = findViewById<TextView>(R.id.tv_users)
-//        currentWeather = findViewById<TextView>(R.id.weather)
-//
-//        getUsers()
-//        getWeather()
-
         if (Intent.ACTION_SEARCH == intent.action) {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
+//                passQuerytoFragments(query)
                 doMySearch(query)
             }
         }
+
+        val fragmentAdapter = PagerAdapter(supportFragmentManager)
+        viewpager_main.adapter = fragmentAdapter
+
+        tabs_main.setupWithViewPager(viewpager_main)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -63,6 +55,17 @@ class MainActivity : AppCompatActivity() {
 
         return true
     }
+
+//    fun passQuerytoFragments(query: String) {
+//
+//        val bundle = Bundle()
+//        bundle.putString("query", "vilnius")
+//
+//        val firstFragment = FirstFragment()
+//        firstFragment.setArguments(bundle)
+//
+//        supportFragmentManager.beginTransaction().replace(R.id.container, firstFragment).commit()
+//    }
 
 
 
@@ -94,61 +97,24 @@ class MainActivity : AppCompatActivity() {
         queue.add(stringReq)
     }
 
-    fun toastMe(view: View) {
-        val myToast = Toast.makeText(this, "Hello Toast!", Toast.LENGTH_SHORT)
-        myToast.show()
-    }
-
-    fun countMe(view: View) {
-        val showCountTextView = findViewById<TextView>(R.id.textView)
-        val countString = showCountTextView.text.toString()
-        var count: Int = Integer.parseInt(countString)
-        count++
-        showCountTextView.text = count.toString()
-    }
-
-    fun randomMe(view: View) {
-        val randomIntent = Intent(this, SecondActivity::class.java)
-        val countString = textView.text.toString()
-        val count = Integer.parseInt(countString)
-        randomIntent.putExtra(SecondActivity.TOTAL_COUNT, count)
-        startActivity(randomIntent)
-    }
-
-//    fun getUsers() {
-//        val queue = Volley.newRequestQueue(this)
-//        val url: String = "https://api.github.com/search/users?q=eyehunt"
-//
-//        val stringReq = StringRequest(Request.Method.GET, url,
-//                Response.Listener<String> { response ->
-//
-//                    var strResp = response.toString()
-//                    val jsonObj: JSONObject = JSONObject(strResp)
-//                    val jsonArray: JSONArray = jsonObj.getJSONArray("items")
-//                    var str_user: String = ""
-//                    for (i in 0 until jsonArray.length()) {
-//                        var jsonInner: JSONObject = jsonArray.getJSONObject(i)
-//                        str_user = str_user + "\n" + jsonInner.get("login")
-//                    }
-//                    textViewJson!!.text = "response : $str_user "
-//                },
-//                Response.ErrorListener { textViewJson!!.text = "That didn't work!" })
-//        queue.add(stringReq)
+//    fun toastMe(view: View) {
+//        val myToast = Toast.makeText(this, "Hello Toast!", Toast.LENGTH_SHORT)
+//        myToast.show()
 //    }
-
-    fun getWeather() {
-        val queue = Volley.newRequestQueue(this)
-        var url: String = "https://api.openweathermap.org/data/2.5/weather?q=vilnius&appid=dd1cbb470e98079b87159f9a28b09359"
-
-        var stringReq = StringRequest(Request.Method.GET, url,
-                Response.Listener<String> { response ->
-
-                    var strResp = response.toString()
-                    val jsonObj: JSONObject = JSONObject(strResp)
-                    var str_weather: String = jsonObj.get("name").toString()
-                    currentWeather!!.text = "City: $str_weather"
-                },
-                Response.ErrorListener { currentWeather!!.text = "That didn't work!" })
-        queue.add(stringReq)
-    }
+//
+//    fun countMe(view: View) {
+//        val showCountTextView = findViewById<TextView>(R.id.textView)
+//        val countString = showCountTextView.text.toString()
+//        var count: Int = Integer.parseInt(countString)
+//        count++
+//        showCountTextView.text = count.toString()
+//    }
+//
+//    fun randomMe(view: View) {
+//        val randomIntent = Intent(this, SecondActivity::class.java)
+//        val countString = textView.text.toString()
+//        val count = Integer.parseInt(countString)
+//        randomIntent.putExtra(SecondActivity.TOTAL_COUNT, count)
+//        startActivity(randomIntent)
+//    }
 }
