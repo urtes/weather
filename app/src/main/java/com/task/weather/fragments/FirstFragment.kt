@@ -26,7 +26,7 @@ class FirstFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val rootView = inflater!!.inflate(R.layout.fragment_first, container, false)
+        val rootView = inflater!!it.inflate(R.layout.fragment_first, container, false)
 
 //        val query = this.arguments!!.getString("query")!!.toString()
 //        doMySearch(query)

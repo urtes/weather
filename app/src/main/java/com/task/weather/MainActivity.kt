@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity() {
 
         if (Intent.ACTION_SEARCH == intent.action) {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
-//                passQuerytoFragments(query)
-                doMySearch(query)
+                passQuerytoFragments(query)
+//                doMySearch(query)
             }
         }
 
@@ -56,18 +56,23 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-//    fun passQuerytoFragments(query: String) {
-//
-//        val bundle = Bundle()
-//        bundle.putString("query", "vilnius")
-//
-//        val firstFragment = FirstFragment()
-//        firstFragment.setArguments(bundle)
-//
-//        supportFragmentManager.beginTransaction().replace(R.id.container, firstFragment).commit()
-//    }
+    fun passQuerytoFragments(query: String): Boolean {
 
+        if(query.length > 0) {
+            val transaction = supportFragmentManager.beginTransaction()
+            val firstFragment = FirstFragment()
 
+            val bundle = Bundle()
+            bundle.putString("query", "vilnius")
+
+            firstFragment.setArguments(bundle)
+
+            transaction.replace(R.id.search_result, firstFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+        return false
+    }
 
     fun doMySearch(query: String) {
         val showSearchResult = findViewById<TextView>(R.id.search_result)
