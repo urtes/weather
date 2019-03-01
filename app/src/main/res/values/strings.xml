@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">weather</string>
-    <string name="hello_world_text">0</string>
-    <string name="random_heading">Here is a random number between 0 and %1d</string>
     <string name="search_hint">Search city</string>
-    <string name="search_result_text">Search result</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="city">City</string>
+    <string name="temp">Temp</string>
+    <string name="weather_conditions">Weather conditions</string>
+    <string name="detail_conditions">Detail conditions</string>
 </resources>

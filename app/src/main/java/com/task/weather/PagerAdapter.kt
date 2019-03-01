@@ -7,7 +7,7 @@ import com.task.weather.fragments.FirstFragment
 import com.task.weather.fragments.SecondFragment
 import com.task.weather.fragments.ThirdFragment
 
-class PagerAdapter (fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class PagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
@@ -28,9 +28,9 @@ class PagerAdapter (fm: FragmentManager) : FragmentPagerAdapter(fm) {
     override fun getPageTitle(position: Int): CharSequence {
         return when (position) {
             0 -> "Now"
-            1 -> "Today"
+            1 -> "Hourly"
             else -> {
-                return "7 days"
+                return "Forecast"
             }
         }
     }
