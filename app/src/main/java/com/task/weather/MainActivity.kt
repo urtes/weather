@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var mToolbar = findViewById(R.id.my_toolbar) as Toolbar
-        setSupportActionBar(mToolbar)
+        var topToolbar = findViewById(R.id.top_toolbar) as Toolbar
+        setSupportActionBar(topToolbar)
 
         if (Intent.ACTION_SEARCH == intent.action) {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
