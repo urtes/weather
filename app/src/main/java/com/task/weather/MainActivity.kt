@@ -20,19 +20,18 @@ import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
-    var bundle: Bundle = Bundle()
+    private var bundle = Bundle()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var topToolbar = findViewById(R.id.top_toolbar) as Toolbar
+        var topToolbar = findViewById<Toolbar>(R.id.top_toolbar)
         setSupportActionBar(topToolbar)
 
         if (Intent.ACTION_SEARCH == intent.action) {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
                 bundle.putString("location", query)
-//                doMySearch(query)
 
             }
         }

@@ -8,7 +8,7 @@ import com.task.weather.fragments.FirstFragment
 import com.task.weather.fragments.SecondFragment
 import com.task.weather.fragments.ThirdFragment
 
-class PagerAdapter(fm: FragmentManager, val bundle: Bundle) : FragmentPagerAdapter(fm) {
+class PagerAdapter(fm: FragmentManager, private val bundleFromActivity: Bundle) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
 
@@ -18,11 +18,9 @@ class PagerAdapter(fm: FragmentManager, val bundle: Bundle) : FragmentPagerAdapt
             else -> ThirdFragment()
         }
 
-        val bundleOuter = bundle
-        var str = bundleOuter.getString("location")
-        val bundleInner = Bundle()
-        bundleInner.putString("my_key", str)
-        fragment.setArguments(bundleInner)
+        val bundleToFragment = Bundle()
+        bundleToFragment.putString("location", bundleFromActivity.getString("location"))
+        fragment.arguments = bundleToFragment
 
         return fragment
     }

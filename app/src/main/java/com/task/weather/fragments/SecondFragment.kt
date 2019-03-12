@@ -10,13 +10,12 @@ import com.task.weather.R
 
 class SecondFragment : Fragment() {
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         var view = inflater!!.inflate(R.layout.fragment_second, container, false)
 
         val city: TextView = view.findViewById(R.id.city)
-        val myStr = arguments?.getString("my_key")
+        val myStr = arguments?.getString("location")
         city.text = myStr
 
         return view
