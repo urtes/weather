@@ -25,6 +25,8 @@ class FirstFragment : Fragment() {
         val myStr = arguments?.getString("location")
         if (myStr != null) {
             doMySearch(myStr, view)
+        } else {
+            doMySearch("Vilnius", view)
         }
 
         return view
@@ -69,7 +71,7 @@ class FirstFragment : Fragment() {
                     Glide.with(this).load(imgUrl).into(imageView)
 
                 },
-                Response.ErrorListener { temp!!.text = "That didn't work!" })
+                Response.ErrorListener { temp?.text = "That didn't work!" })
         queue.add(stringReq)
     }
 }

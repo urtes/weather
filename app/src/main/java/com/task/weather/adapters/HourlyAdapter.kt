@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.android.volley.toolbox.Volley
 import com.task.weather.R
 
 class HourlyAdapter (private val context: Context,
-                     private val dataSource: Array<String>,
+                     private val dataSource: MutableList<HashMap<String, String>>,
                      private val location: String) : BaseAdapter() {
 
     private val inflater: LayoutInflater
@@ -32,19 +33,19 @@ class HourlyAdapter (private val context: Context,
 
         val rowView = inflater.inflate(R.layout.list_item_hourly, parent, false)
 
-        val titleTextView = rowView.findViewById(R.id.recipe_list_title) as TextView
+        val timeView = rowView.findViewById(R.id.time) as TextView
 
-        val subtitleTextView = rowView.findViewById(R.id.recipe_list_subtitle) as TextView
+        val conditionsView = rowView.findViewById(R.id.conditions) as TextView
 
-        val detailTextView = rowView.findViewById(R.id.recipe_list_detail) as TextView
+        val temperatureView = rowView.findViewById(R.id.temperature) as TextView
 
-        val thumbnailImageView = rowView.findViewById(R.id.recipe_list_thumbnail) as ImageView
+        val weatherIconView = rowView.findViewById(R.id.weather_icon) as ImageView
 
-        val smth = getItem(position) as String
+        val smth = getItem(position) as HashMap<String, String>
 
-        titleTextView.text = smth
-        subtitleTextView.text = location
-        detailTextView.text = "also testing"
+        timeView.text = smth["time"]
+        conditionsView.text = location
+        temperatureView.text = smth["icon"]
 
         return rowView
     }
