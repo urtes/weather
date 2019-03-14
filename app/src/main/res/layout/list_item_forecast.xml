@@ -42,19 +42,19 @@
             android:layout_toLeftOf="@id/temperature">
 
         <TextView
-                android:id="@+id/time"
+                android:id="@+id/day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:textSize="18sp"
-                tools:text="Time" />
+                tools:text="Day" />
 
         <TextView
                 android:id="@+id/conditions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/time"
+                android:layout_below="@+id/day"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="2dp"
