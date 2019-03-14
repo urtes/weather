@@ -17,6 +17,7 @@ import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import com.task.weather.R
 import com.task.weather.adapters.HourlyAdapter
+import com.task.weather.models.HourlyData
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -29,10 +30,7 @@ class SecondFragment : Fragment() {
 
         var view = inflater!!.inflate(R.layout.fragment_second, container, false)
 
-        val city: TextView = view.findViewById(R.id.city)
         val myStr = arguments?.getString("location")
-        city.text = myStr
-
 
         if (myStr != null) {
             fetchHourlyData(view, myStr)
@@ -40,14 +38,13 @@ class SecondFragment : Fragment() {
             fetchHourlyData(view, "vilnius")
         }
 
-
         return view
     }
 
     private fun fetchHourlyData(view: View, location: String) {
         val queue = Volley.newRequestQueue(requireContext())
         val url = "https://api.openweathermap.org/data/2.5/forecast?q=$location&units=metric&appid=dd1cbb470e98079b87159f9a28b09359"
-        val hourlyForecast = ArrayList<HashMap<String, String>>()
+        val hourlyForecast = ArrayList<HourlyData>()
 
         val stringReq = StringRequest(Request.Method.GET, url,
                 Response.Listener<String> { response ->
@@ -56,23 +53,23 @@ class SecondFragment : Fragment() {
                     var jsonArray = JSONObject(strResp).getJSONArray("list")
 
                     for (i in 0..8) {
-                        var hourlyData = HashMap<String, String>()
+
                         var jsonObject: JSONObject = jsonArray.getJSONObject(i)
                         var jsonArrayWeather: JSONArray = jsonObject.getJSONArray("weather")
+                        var jsonObjectMain: JSONObject = jsonObject.getJSONObject("main")
 
-                        hourlyData["icon"] = jsonArrayWeather.getJSONObject(0).get("icon").toString()
-                        hourlyData["time"] = jsonObject.get("dt_txt").toString()
+                        val hourlyData = HourlyData(jsonObject.get("dt_txt").toString(),
+                                jsonArrayWeather.getJSONObject(0).get("main").toString(),
+                                jsonObjectMain.get("temp").toString(),
+                                jsonArrayWeather.getJSONObject(0).get("icon").toString())
 
-                        Log.d("laikas", hourlyData["icon"])
-                        Log.d("ikona", hourlyData["time"])
+                        Log.d("tagas", hourlyData.toString())
 
                         hourlyForecast.add(hourlyData)
                     }
 
                     listView = view.findViewById(R.id.list_view)
-                    listView.adapter = HourlyAdapter(requireContext(), hourlyForecast, location)
-
-                    Log.d("TAGAS2", hourlyForecast.toString())
+                    listView.adapter = HourlyAdapter(requireContext(), hourlyForecast)
                 },
                 Response.ErrorListener { "That didn't work!" })
 
