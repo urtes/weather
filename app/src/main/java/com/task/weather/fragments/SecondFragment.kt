@@ -10,9 +10,10 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.task.weather.Api
 import com.task.weather.R
 import com.task.weather.adapters.HourlyAdapter
-import com.task.weather.models.HourlyData
+import com.task.weather.models.Forecast
 import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.math.roundToInt
@@ -39,8 +40,8 @@ class SecondFragment : Fragment() {
     private fun fetchAndRenderHourlyData(view: View, location: String) {
 
         val queue = Volley.newRequestQueue(requireContext())
-        val url = "https://api.openweathermap.org/data/2.5/forecast?q=$location&units=metric&appid=dd1cbb470e98079b87159f9a28b09359"
-        val hourlyForecast = ArrayList<HourlyData>()
+        val url = "${Api.URL}forecast?q=$location&units=metric&appid=${Api.API_KEY}"
+        val hourlyForecast = ArrayList<Forecast>()
 
         val stringReq = StringRequest(Request.Method.GET, url,
                 Response.Listener<String> { response ->
@@ -54,7 +55,7 @@ class SecondFragment : Fragment() {
                         val jsonArrayWeather: JSONArray = jsonObject.getJSONArray("weather")
                         val jsonObjectMain: JSONObject = jsonObject.getJSONObject("main")
 
-                        val hourlyData = HourlyData(jsonObject.get("dt_txt").toString(),
+                        val hourlyData = Forecast(jsonObject.getString("dt_txt"),
                                 jsonArrayWeather.getJSONObject(0).get("main").toString(),
                                 jsonObjectMain.getDouble("temp").roundToInt().toString(),
                                 jsonArrayWeather.getJSONObject(0).get("icon").toString())

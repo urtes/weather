@@ -6,13 +6,13 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity" android:background="@color/screenBackground">
+        tools:context=".MainActivity">
 
     <android.support.v7.widget.Toolbar
             android:id="@+id/top_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/screenBackground"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
@@ -21,11 +21,12 @@
             android:id="@+id/tabs_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/screenBackground"
             app:tabMode="fixed"
             app:layout_constraintTop_toBottomOf="@+id/top_toolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-    />
+            app:tabIndicatorColor="@color/tabIndicator"/>
 
     <android.support.v4.view.ViewPager
             android:id="@+id/viewpager_main"

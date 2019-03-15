@@ -2,24 +2,18 @@ package com.task.weather.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
-import android.widget.TextView
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.bumptech.glide.Glide
+import com.task.weather.Api
 import com.task.weather.R
 import com.task.weather.adapters.ForecastAdapter
-import com.task.weather.adapters.HourlyAdapter
-import com.task.weather.models.ForecastData
-import com.task.weather.models.HourlyData
+import com.task.weather.models.Forecast
 import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.math.roundToInt
@@ -35,18 +29,19 @@ class ThirdFragment : Fragment() {
         val location = arguments?.getString("location")
 
         if (location != null) {
-            fetchForecastData(view, location)
+            fetchAndRenderForecastData(view, location)
         } else {
-            fetchForecastData(view, "Vilnius")
+            fetchAndRenderForecastData(view, "Vilnius")
         }
 
         return view
     }
 
-    private fun fetchForecastData(view: View, location: String) {
+    private fun fetchAndRenderForecastData(view: View, location: String) {
+
         val queue = Volley.newRequestQueue(requireContext())
-        val url = "https://api.openweathermap.org/data/2.5/forecast?q=$location&units=metric&appid=dd1cbb470e98079b87159f9a28b09359"
-        val dailyForecast = ArrayList<ForecastData>()
+        val url = "${Api.URL}forecast?q=$location&units=metric&appid=${Api.API_KEY}"
+        val dailyForecast = ArrayList<Forecast>()
 
         val stringReq = StringRequest(Request.Method.GET, url,
                 Response.Listener<String> { response ->
@@ -61,7 +56,7 @@ class ThirdFragment : Fragment() {
                         val jsonArrayWeather: JSONArray = jsonObject.getJSONArray("weather")
                         val jsonObjectMain: JSONObject = jsonObject.getJSONObject("main")
 
-                        val forecastData = ForecastData(jsonObject.get("dt_txt").toString(),
+                        val forecastData = Forecast(jsonObject.get("dt_txt").toString(),
                                 jsonArrayWeather.getJSONObject(0).get("main").toString(),
                                 jsonObjectMain.getDouble("temp").roundToInt().toString(),
                                 jsonArrayWeather.getJSONObject(0).get("icon").toString())

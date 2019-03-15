@@ -8,12 +8,12 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.task.weather.Api
 import com.task.weather.R
-import com.task.weather.models.ForecastData
-import com.task.weather.models.HourlyData
+import com.task.weather.models.Forecast
 
 class ForecastAdapter (private val context: Context,
-                     private val dataSource: MutableList<ForecastData>) : BaseAdapter() {
+                     private val dataSource: MutableList<Forecast>) : BaseAdapter() {
 
     private val inflater: LayoutInflater
             = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -42,15 +42,15 @@ class ForecastAdapter (private val context: Context,
 
         val weatherIconView = rowView.findViewById(R.id.weather_icon) as ImageView
 
-        val forecastData = getItem(position) as ForecastData
+        val forecastData = getItem(position) as Forecast
 
-        timeView.text = forecastData.day
+        timeView.text = forecastData.dayOfWeek
         conditionsView.text = forecastData.conditions
         temperatureView.text = forecastData.temp + "°"
 
         var icon = forecastData.icon
 
-        var imgUrl = "http://openweathermap.org/img/w/$icon.png"
+        var imgUrl = "${Api.IMAGE_URL}$icon.png"
         Glide.with(context).load(imgUrl).into(weatherIconView)
 
         return rowView

@@ -12,16 +12,12 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
+import com.task.weather.Api
 import com.task.weather.R
 import org.json.JSONObject
-import java.sql.Date
 import java.sql.Time
 import java.sql.Timestamp
-import java.time.Instant
-import java.time.ZoneId
 import kotlin.math.roundToInt
-import java.text.DateFormat
-import java.util.*
 
 class FirstFragment : Fragment() {
 
@@ -46,11 +42,8 @@ class FirstFragment : Fragment() {
         val tempView: TextView = view.findViewById(R.id.temp)
         val tempHLView: TextView = view.findViewById(R.id.temp_h_l)
         val detailConditionsView: TextView  = view.findViewById(R.id.detail_conditions)
-
-
         val queue = Volley.newRequestQueue(requireContext())
-
-        val url = "https://api.openweathermap.org/data/2.5/weather?q=$location&units=metric&appid=dd1cbb470e98079b87159f9a28b09359"
+        val url = "${Api.URL}weather?q=$location&units=metric&appid=${Api.API_KEY}"
 
         val stringReq = StringRequest(Request.Method.GET, url,
                 Response.Listener<String> { response ->
@@ -72,30 +65,21 @@ class FirstFragment : Fragment() {
                     val humidity = jsonObjMain.get("humidity").toString()
                     val visibility = jsonObj.get("visibility").toString()
                     val winds = jsonObjWind.get("speed").toString()
-                    val sunrise = jsonObjSys.getLong("sunrise")
-                    val sunset = jsonObjSys.getLong("sunset")
-
-//                    val stamp1 = Timestamp(sunrise)
-//                    val time1 = Time(stamp1.time)
-//
-//                    val stamp2 = Timestamp(sunset)
-//                    val time2 = Time(stamp2.time)
-//
-//                    println(time1)
-//                    println(time2)
+                    val sunrise = Time(Timestamp(jsonObjSys.getLong("sunrise") * 1000).time)
+                    val sunset = Time(Timestamp(jsonObjSys.getLong("sunset") * 1000).time)
 
                     cityView?.text = city
                     tempView?.text = "$temp°"
                     tempHLView?.text = "H $tempHigh° / L $tempLow°"
                     conditionsView?.text = conditions
-                    detailConditionsView?.text = "Pressure: $pressure\n" +
-                            "Humidity: $humidity\n" +
-                            "Visibility: $visibility\n" +
-                            "Winds: $winds\n" +
-                            "Sunrise: $sunrise\n" +
-                            "Sunset: $sunset"
+                    detailConditionsView?.text = "Pressure:    $pressure\n" +
+                            "Humidity:    $humidity\n" +
+                            "Visibility:     $visibility\n" +
+                            "Winds:         $winds\n" +
+                            "Sunrise:       $sunrise\n" +
+                            "Sunset:        $sunset"
 
-                    val imgUrl = "http://openweathermap.org/img/w/$icon.png"
+                    val imgUrl = "${Api.IMAGE_URL}$icon.png"
                     val imageView: ImageView = view.findViewById(R.id.weather_icon)
                     Glide.with(this).load(imgUrl).into(imageView)
 

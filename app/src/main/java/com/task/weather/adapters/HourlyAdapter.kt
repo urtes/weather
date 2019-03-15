@@ -8,11 +8,12 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.task.weather.Api
 import com.task.weather.R
-import com.task.weather.models.HourlyData
+import com.task.weather.models.Forecast
 
 class HourlyAdapter (private val context: Context,
-                     private val dataSource: MutableList<HourlyData>) : BaseAdapter() {
+                     private val dataSource: MutableList<Forecast>) : BaseAdapter() {
 
     private val inflater: LayoutInflater
             = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -41,7 +42,7 @@ class HourlyAdapter (private val context: Context,
 
         val weatherIconView = rowView.findViewById(R.id.weather_icon) as ImageView
 
-        val hourlyData = getItem(position) as HourlyData
+        val hourlyData = getItem(position) as Forecast
 
         timeView.text = hourlyData.time
         conditionsView.text = hourlyData.conditions
@@ -49,7 +50,7 @@ class HourlyAdapter (private val context: Context,
 
         var icon = hourlyData.icon
 
-        var imgUrl = "http://openweathermap.org/img/w/$icon.png"
+        var imgUrl = "${Api.IMAGE_URL}$icon.png"
         Glide.with(context).load(imgUrl).into(weatherIconView)
 
         return rowView
