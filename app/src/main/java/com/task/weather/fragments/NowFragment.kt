@@ -19,11 +19,11 @@ import java.sql.Time
 import java.sql.Timestamp
 import kotlin.math.roundToInt
 
-class FirstFragment : Fragment() {
+class NowFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view = inflater?.inflate(R.layout.fragment_first, container, false)
+        val view = inflater?.inflate(R.layout.fragment_now, container, false)
         val location = arguments?.getString("location")
 
         if (location != null) {
@@ -72,10 +72,10 @@ class FirstFragment : Fragment() {
                     tempView?.text = "$temp°"
                     tempHLView?.text = "H $tempHigh° / L $tempLow°"
                     conditionsView?.text = conditions
-                    detailConditionsView?.text = "Pressure:    $pressure\n" +
-                            "Humidity:    $humidity\n" +
-                            "Visibility:     $visibility\n" +
-                            "Winds:         $winds\n" +
+                    detailConditionsView?.text = "Pressure:    $pressure hPa\n" +
+                            "Humidity:    $humidity %\n" +
+                            "Visibility:     $visibility m\n" +
+                            "Winds:         $winds mps\n" +
                             "Sunrise:       $sunrise\n" +
                             "Sunset:        $sunset"
 

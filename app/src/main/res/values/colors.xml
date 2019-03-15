@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="screenBackground">#028796</color>
-    <color name="fragmentsBackground">#5bbcc7</color>
+    <color name="fragmentsBackground">#51aab4</color>
     <color name="textLight">#ffffff</color>
     <color name="tabIndicator">#ffffff</color>
 </resources>

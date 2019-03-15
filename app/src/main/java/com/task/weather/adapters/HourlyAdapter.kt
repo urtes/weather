@@ -33,13 +33,9 @@ class HourlyAdapter (private val context: Context,
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
         val rowView = inflater.inflate(R.layout.list_item_hourly, parent, false)
-
         val timeView = rowView.findViewById(R.id.time) as TextView
-
         val conditionsView = rowView.findViewById(R.id.conditions) as TextView
-
         val temperatureView = rowView.findViewById(R.id.temperature) as TextView
-
         val weatherIconView = rowView.findViewById(R.id.weather_icon) as ImageView
 
         val hourlyData = getItem(position) as Forecast
@@ -49,7 +45,6 @@ class HourlyAdapter (private val context: Context,
         temperatureView.text = hourlyData.temp + "°"
 
         var icon = hourlyData.icon
-
         var imgUrl = "${Api.IMAGE_URL}$icon.png"
         Glide.with(context).load(imgUrl).into(weatherIconView)
 

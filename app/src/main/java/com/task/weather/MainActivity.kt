@@ -9,6 +9,7 @@ import android.view.Menu
 import kotlinx.android.synthetic.main.activity_main.*
 import android.support.v7.widget.Toolbar
 import android.support.v7.widget.SearchView
+import com.task.weather.adapters.PagerAdapter
 
 class MainActivity : AppCompatActivity() {
 
