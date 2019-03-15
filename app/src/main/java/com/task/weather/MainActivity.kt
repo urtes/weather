@@ -1,45 +1,49 @@
 package com.task.weather
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.TextView
-import android.widget.Toast
+import android.view.Menu
 import kotlinx.android.synthetic.main.activity_main.*
+import android.support.v7.widget.Toolbar
+import android.support.v7.widget.SearchView
+import com.task.weather.adapters.PagerAdapter
 
 class MainActivity : AppCompatActivity() {
 
+    private val bundle = Bundle()
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val topToolbar = findViewById<Toolbar>(R.id.top_toolbar)
+        setSupportActionBar(topToolbar)
+
+        if (Intent.ACTION_SEARCH == intent.action) {
+            intent.getStringExtra(SearchManager.QUERY)?.also { query ->
+                bundle.putString("location", query)
+
+            }
+        }
+
+        val fragmentAdapter = PagerAdapter(supportFragmentManager, bundle)
+        viewpager_main.adapter = fragmentAdapter
+        tabs_main.setupWithViewPager(viewpager_main)
     }
 
-    fun toastMe(view: View) {
-        val myToast = Toast.makeText(this, "Hello Toast!", Toast.LENGTH_SHORT)
-        myToast.show()
-    }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
-    fun countMe(view: View) {
-        val showCountTextView = findViewById<TextView>(R.id.textView)
+        menuInflater.inflate(R.menu.options_menu, menu)
 
-        val countString = showCountTextView.text.toString()
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        (menu.findItem(R.id.action_search).actionView as SearchView).apply {
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        }
 
-        var count: Int = Integer.parseInt(countString)
-        count++
-
-        showCountTextView.text = count.toString()
-    }
-
-    fun randomMe(view: View) {
-        val randomIntent = Intent(this, SecondActivity::class.java)
-
-        val countString = textView.text.toString()
-
-        val count = Integer.parseInt(countString)
-
-        randomIntent.putExtra(SecondActivity.TOTAL_COUNT, count)
-
-        startActivity(randomIntent)
+        return true
     }
 }
