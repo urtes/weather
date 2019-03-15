@@ -15,12 +15,15 @@
             android:background="@color/screenBackground"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:theme="@style/ToolBarStyle"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <android.support.design.widget.TabLayout
             android:id="@+id/tabs_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tabTextColor="@color/textLight"
+            app:tabSelectedTextColor="@color/textLight"
             android:background="@color/screenBackground"
             app:tabMode="fixed"
             app:layout_constraintTop_toBottomOf="@+id/top_toolbar"

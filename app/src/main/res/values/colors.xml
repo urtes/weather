@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-
-    <color name="screenBackground">#FEDBD0</color>
-    <color name="fragmentsBackground">#945e54</color>
-    <color name="cityBackground">#442C2E</color>
-    <color name="textLight">#FFF4F5F5</color>
-    <color name="textDark">#232323</color>
-    <color name="tabIndicator">#2f3232</color>
+    <color name="screenBackground">#028796</color>
+    <color name="fragmentsBackground">#5bbcc7</color>
+    <color name="textLight">#ffffff</color>
+    <color name="tabIndicator">#ffffff</color>
 </resources>
